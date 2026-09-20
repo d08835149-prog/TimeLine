@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Timeline</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- NAV -->
+    <nav>
+
+      <div class="brand">
+        <div class="brand-icon">◷</div>
+        <span>Timeline</span>
+      </div>
+
+      <div class="nav-right">
+
+        <div class="theme-tools">
+
+          <button
+            class="icon-btn"
+            id="themeToggle"
+            title="Light / Dark Mode"
+          >
+            ☀
+          </button>
+
+          <button
+            class="icon-btn"
+            id="colorButton"
+            title="Accent Color"
+          >
+            <span id="colorPreview"></span>
+          </button>
+
+          <div
+            class="color-menu"
+            id="colorMenu"
+          >
+            <button class="color-option" data-color="purple" style="--option-color:#7c5cff"></button>
+            <button class="color-option" data-color="blue" style="--option-color:#3478f6"></button>
+            <button class="color-option" data-color="cyan" style="--option-color:#12b8c4"></button>
+            <button class="color-option" data-color="green" style="--option-color:#32c878"></button>
+            <button class="color-option" data-color="orange" style="--option-color:#ff8a3d"></button>
+            <button class="color-option" data-color="pink" style="--option-color:#e950a4"></button>
+          </div>
+
+        </div>
+
+        <div
+          class="today-chip"
+          id="todayChip"
+        >
+          Today
+        </div>
+
+      </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="eyebrow">
+        YOUR PERSONAL TIMELINE
+      </div>
+
+      <h1>
+        See your time.<br>
+        <span>Past to future.</span>
+      </h1>
+
+      <p>
+        중요한 날짜를 기록하고,
+        지나간 시간과 앞으로 남은 시간을
+        한눈에 확인하세요.
+      </p>
+
+    </section>
+
+
+    <!-- ADD EVENT -->
+    <section class="event-panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h2 id="formTitle">
+            새 이벤트
+          </h2>
+
+          <p>
+            날짜, 카테고리, 색상을 설정할 수 있습니다.
+          </p>
+        </div>
+
+        <button
+          class="cancel-edit-btn hidden"
+          id="cancelEditButton"
+        >
+          Cancel Edit
+        </button>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <div class="field field-title">
+
+          <label>EVENT NAME</label>
+
+          <input
+            id="titleInput"
+            type="text"
+            placeholder="예: Graduation"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>CATEGORY</label>
+
+          <select id="categoryInput">
+            <option value="Personal">Personal</option>
+            <option value="School">School</option>
+            <option value="Work">Work</option>
+            <option value="Travel">Travel</option>
+            <option value="Project">Project</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Other">Other</option>
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>START DATE</label>
+
+          <input
+            id="startDate"
+            type="date"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>END DATE · OPTIONAL</label>
+
+          <input
+            id="endDate"
+            type="date"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="event-color-section">
+
+        <div class="event-color-label">
+          EVENT COLOR
+        </div>
+
+        <div class="event-color-picker">
+
+          <button
+            class="event-color active"
+            data-event-color="#7c5cff"
+            style="--event-color:#7c5cff"
+          ></button>
+
+          <button
+            class="event-color"
+            data-event-color="#3478f6"
+            style="--event-color:#3478f6"
+          ></button>
+
+          <button
+            class="event-color"
+            data-event-color="#12b8c4"
+            style="--event-color:#12b8c4"
+          ></button>
+
+          <button
+            class="event-color"
+            data-event-color="#32c878"
+            style="--event-color:#32c878"
+          ></button>
+
+          <button
+            class="event-color"
+            data-event-color="#ff8a3d"
+            style="--event-color:#ff8a3d"
+          ></button>
+
+          <button
+            class="event-color"
+            data-event-color="#e950a4"
+            style="--event-color:#e950a4"
+          ></button>
+
+          <button
+            class="event-color"
+            data-event-color="#ff627d"
+            style="--event-color:#ff627d"
+          ></button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="add-btn"
+        id="addEventButton"
+      >
+        + Add Event
+      </button>
+
+    </section>
+
+
+    <!-- TIMELINE HEADER -->
+    <section>
+
+      <div class="timeline-header">
+
+        <div>
+
+          <h2>
+            Your Timeline
+          </h2>
+
+          <p>
+            과거부터 미래까지 시간 순서대로 표시됩니다.
+          </p>
+
+        </div>
+
+        <div
+          class="event-count"
+          id="eventCount"
+        >
+          0 events
+        </div>
+
+      </div>
+
+
+      <div id="timeline"></div>
+
+    </section>
+
+  </div>
+
+
+  <!-- EDIT MODAL -->
+  <div
+    class="modal-overlay"
+    id="modalOverlay"
+  >
+
+    <div class="modal">
+
+      <button
+        class="modal-close"
+        id="modalClose"
+      >
+        ×
+      </button>
+
+      <div class="modal-small">
+        EVENT DETAILS
+      </div>
+
+      <h2 id="modalTitle">
+        Event
+      </h2>
+
+      <div
+        class="modal-info"
+        id="modalInfo"
+      ></div>
+
+      <div class="modal-actions">
+
+        <button
+          class="modal-edit-btn"
+          id="modalEditButton"
+        >
+          Edit Event
+        </button>
+
+        <button
+          class="modal-delete-btn"
+          id="modalDeleteButton"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+
+  <div class="footer-inner">
+
+    <div class="footer-main">
+
+      <div class="footer-logo">
+        ◷ Timeline
+      </div>
+
+      <p>
+        Your personal time, clearly organized.
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="/privacy.html">
+        Privacy Policy
+      </a>
+
+      <a href="/terms.html">
+        Terms of Use
+      </a>
+
+    </div>
+
+
+    <div class="footer-copy">
+      © 2026 Timeline
+    </div>
+
+  </div>
+
+</footer>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
